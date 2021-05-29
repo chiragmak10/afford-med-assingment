@@ -1,7 +1,6 @@
-import React, { FC, ReactElement, useState } from "react";
+import { FC, ReactElement } from "react";
 import axios from "axios";
-import { Formik, useFormik } from "formik";
-import { TextField } from "@material-ui/core";
+import { useFormik } from "formik";
 
 export const Login: FC = (): ReactElement => {
   const formik = useFormik({
