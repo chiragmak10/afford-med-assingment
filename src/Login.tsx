@@ -1,63 +1,67 @@
 import React, { FC, ReactElement, useState } from "react";
 import axios from "axios";
+import { Formik, useFormik } from "formik";
+import { TextField } from "@material-ui/core";
 
 export const Login: FC = (): ReactElement => {
-  const [firstname, setFirstName] = useState("");
-  const [lastname, setLastname] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const data = {
-    firstname: firstname,
-    lastname: lastname,
-    email: email,
-    password: password,
-  };
-  const handleSignup = (e: any): void => {
-    e.preventDefault();
-    setFirstName("");
-    setEmail("");
-    setPassword("");
-    setLastname("");
-    axios.post("localhost:3030/signup").then(
-      (resp) => {
-        console.log(resp);
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
-  };
+  const formik = useFormik({
+    initialValues: {
+      email: "",
+      firstname: "",
+      lastname: "",
+      password: "",
+    },
+    onSubmit: (e): void => {
+      const headers = {
+        "Content-Type": "application/x-www-form-urlencoded'",
+        "Access-Control-Allow-Origin": "*",
+      };
+      axios.post("localhost:3030/signup", formik.values, { headers }).then(
+        (resp) => {
+          console.log(resp);
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+    },
+  });
 
   return (
-    <div>
-      <h4> Firstname</h4>
+    <form onSubmit={formik.handleSubmit}>
+      <label htmlFor="firstname">First Name</label>
       <input
-        onChange={(e) => {
-          setFirstName(e.target.value);
-        }}
+        name="firstname"
+        id="firstname"
+        type="firstname"
+        onChange={formik.handleChange}
+        value={formik.values.firstname}
       />
-      <h4> Lastname</h4>
+      <label htmlFor="lastname">First Name</label>
       <input
-        onChange={(e) => {
-          setLastname(e.target.value);
-        }}
+        name="lastname"
+        id="lastname"
+        type="lastname"
+        onChange={formik.handleChange}
+        value={formik.values.lastname}
       />
-      <h4> Email</h4>
+      <label htmlFor="email">First Name</label>
       <input
-        onChange={(e) => {
-          setEmail(e.target.value);
-        }}
+        name="email"
+        id="email"
+        type="email"
+        onChange={formik.handleChange}
+        value={formik.values.email}
       />
-      <h4>Password</h4>
+      <label htmlFor="Password"> Password</label>
       <input
-        onChange={(e) => {
-          setPassword(e.target.value);
-        }}
+        name="password"
+        id="password"
+        type="password"
+        onChange={formik.handleChange}
+        value={formik.values.password}
       />
-      <button type="submit" onClick={(e) => handleSignup(e)}>
-        Signup
-      </button>
-      <button type="submit">Login</button>
-    </div>
+      <button type="submit"> Submit </button>
+    </form>
   );
 };
