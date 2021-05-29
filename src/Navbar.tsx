@@ -9,7 +9,7 @@ export const Navbar: FC = (): ReactElement => {
         <Grid container>
           <Grid style={{ flex: 1 }} item>
             <Typography variant="h5" color="inherit">
-              Pharm Easy
+              Med Easy
             </Typography>
           </Grid>
           <Button onClick={() => {}} color="inherit">
